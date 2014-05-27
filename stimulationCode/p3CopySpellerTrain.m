@@ -11,12 +11,12 @@ hostName = getHostName();
 switch hostName
     case 'kuleuven-24b13c'
         dataDir = 'd:\KULeuven\PhD\Work\P300basedBciSpeller\recordedData\';
-        stimDir = 'd:\KULeuven\PhD\Work\P300basedBciSpeller\code\stimuliGenerator\Sessions\';
-        addpath('d:\KULeuven\PhD\Work\P300basedBciSpeller\code\deps\');
+        stimDir = 'd:\KULeuven\PhD\Work\P300basedBciSpeller\p3SpellerCode\stimulationCode\stimuliGenerator\Sessions\';
+        addpath('d:\KULeuven\PhD\Work\P300basedBciSpeller\p3SpellerCode\stimulationCode\deps\');
     case 'neu-wrk-0158'
         dataDir = 'd:\Adrien\Work\P300basedBciSpeller\recordedData\';
-        stimDir = 'd:\Adrien\Work\P300basedBciSpeller\code\stimuliGenerator\Sessions\';
-        addpath('d:\Adrien\Work\P300basedBciSpeller\code\deps\');
+        stimDir = 'd:\Adrien\Work\P300basedBciSpeller\p3SpellerCode\stimulationCode\stimuliGenerator\Sessions\';
+        addpath('d:\Adrien\Work\P300basedBciSpeller\p3SpellerCode\stimulationCode\deps\');
     case 'neu-wrk-0198'
         dataDir = 'c:\data\EEG-recordings\P300-speller\';
         stimDir = '.\stimuliGenerator\Sessions\';
