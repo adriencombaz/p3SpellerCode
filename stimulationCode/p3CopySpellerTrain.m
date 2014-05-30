@@ -4,7 +4,7 @@ desiredScreenID = 2;
 stimStyle       = 'copySpelling\2D\';
 % stimStyle       = 'copySpelling\2D_simple\';
 
-
+    
 %%                      INIT DIRECTORIES
 %==========================================================================
 hostName = getHostName();

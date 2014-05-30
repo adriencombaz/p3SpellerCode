@@ -6,12 +6,12 @@ hostName = getHostName();
 switch hostName
     case 'kuleuven-24b13c'
         dataDir = 'd:\KULeuven\PhD\Work\P300basedBciSpeller\recordedData\';
-        addpath('d:\KULeuven\PhD\Work\P300basedBciSpeller\code\deps\');
-        addpath('d:\KULeuven\PhD\Work\P300basedBciSpeller\code\deps\Linear_SVM_tool_for_BCI_2\');
+        addpath('d:\KULeuven\PhD\Work\P300basedBciSpeller\p3SpellerCode\stimulationCode\deps\');
+        addpath('d:\KULeuven\PhD\Work\P300basedBciSpeller\p3SpellerCode\stimulationCode\deps\Linear_SVM_tool_for_BCI_2\');
     case 'neu-wrk-0158'
         dataDir = 'd:\Adrien\Work\P300basedBciSpeller\recordedData\';
-        addpath('d:\Adrien\Work\P300basedBciSpeller\code\deps\');
-        addpath('d:\Adrien\Work\P300basedBciSpeller\code\deps\Linear_SVM_tool_for_BCI_2\');
+        addpath('d:\Adrien\Work\P300basedBciSpeller\p3SpellerCode\stimulationCode\deps\');
+        addpath('d:\Adrien\Work\P300basedBciSpeller\p3SpellerCode\stimulationCode\deps\Linear_SVM_tool_for_BCI_2\');
     otherwise
         error('Unknown host');
 end

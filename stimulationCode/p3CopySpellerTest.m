@@ -3,7 +3,7 @@ function p3CopySpellerTest
 desiredScreenID         = 2;
 stimStyle               = 'copySpelling\2D\';
 nTCPsamplesPerChannel   = 2;
-ipAddress               = '10.35.6.29'; %'localhost';
+ipAddress               = '10.35.6.26'; %'localhost';
 tcpPortNb               = 778;
 stringWord              = 'test';
 stringWord              = upper( stringWord );
@@ -143,7 +143,7 @@ dataFilename = sprintf( '%s%s-testing.mat', currentDataDir, currentTimeString );
 %%            SIZES INFO FOR CORRECT DISPLAY OF SITMULI
 %==========================================================================
 stimuli                 = train.pars.stimuli;
-stringHeighInPixels     = stimuli.string_height-2*TopStringMarginInPixels;
+stringHeighInPixels     = round( (stimuli.string_height-3*TopStringMarginInPixels) / 2 );
 stringGapInPixels       = round( stimuli.string_height / 16 );
 leftStartStringInPixels = LeftStringMarginInPixels;
 
@@ -204,7 +204,7 @@ vSize       = max( cellfun(@(x) max(size(x,1)), stimuli.dimmed_symbols(:)) );
 topText     = zeros(vSize, hSize, 3, 'uint8');
 hPixIndTop  = 1;   
 for iChar = 1:nChar
-    im = stimuli.dimmed_symbols{ stimuli.i_matrix==cueList(iChar) };
+    im = stimuli.dimmed_symbols{ stimuli.i_matrix==charList(iChar) };
     topText(vSize-size(im,1)+1:end, hPixIndTop:hPixIndTop+size(im,2)-1, :) = im;
     hPixIndTop = hPixIndTop + size(im,2) + stringGapInPixels;    
 end
@@ -255,7 +255,10 @@ end
 %--------------------------------------------------------------------------
 iTopStrStim     = find( cellfun( @(x) strcmp(x, 'top string'), {st1.sc.stimuli(:).description} ) );
 st1.sc.stimuli(iTopStrStim).desired.position         = [LeftStringMarginInPixels TopStringMarginInPixels LeftStringMarginInPixels+resizeStringFactor*hPixIndTop TopStringMarginInPixels + stringHeighInPixels];
-st1.sc.stimuli(iTopStrStim).states(1).position       = st1.sc.stimuli(iTopStrStim).desired.position;
+% st1.sc.stimuli(iTopStrStim).states(1).position       = st1.sc.stimuli(iTopStrStim).desired.position;
+st1.sc.stimuli(iTopStrStim).states(1).desired.position       = st1.sc.stimuli(iTopStrStim).desired.position;
+st1.sc.stimuli(iTopStrStim).states(2).desired.position       = st1.sc.stimuli(iTopStrStim).desired.position;
+st1.sc.stimuli(iTopStrStim).states(3).desired.position       = st1.sc.stimuli(iTopStrStim).desired.position;
 
 
 
@@ -279,7 +282,7 @@ nMaxEvents  = round( 2 * nChar *( 2 ...                             % start and 
                             + 2 ...                                 % feedback symbol on and off events
                             + 2 ...                                 % feedback string on and off events
                             ) );
-labChan     = biosemiLabelChannel( 'sizeListLabels', nMaxEvents , 'useTriggerCable', useLptPort);
+labChan     = biosemiLabelChannel( 'sizeListLabels', nMaxEvents , 'sendLptMarkers', useLptPort);
 
 %%                        INIT TCP/IP COMMUNICATION
 %==========================================================================
@@ -442,7 +445,7 @@ for iRound = 1:nChar
     symbolWidth                                             = ampFactor*size( stimuli.intense_symbols{ winnerSymbol.iRowCol }, 2 );
     distFromLeft                                            = (stimuli.scr_cols - symbolWidth) / 2;
     distFromTop                                             = (stimuli.scr_rows - stimuli.string_height - symbolHeight) / 2;
-    st1.sc.stimuli(iFbSymbStimulus).states(1).position      = [ ...
+    st1.sc.stimuli(iFbSymbStimulus).states(1).desired.position      = [ ...
                                                                 round( 1 + distFromLeft )...                                            % left start
                                                                 ; round( 1 + distFromTop + stimuli.string_height )...                   % top start
                                                                 ; round( 1 + distFromLeft + symbolWidth ) ...                           % left end
@@ -478,12 +481,12 @@ for iRound = 1:nChar
 %     end
     symbStrPos = [
         leftStartStringInPixels
-        TopStringMarginInPixels + stringHeighInPixels - size( stimuli.dimmed_symbols{ winnerSymbol.iRowCol }, 1 )
+        2*TopStringMarginInPixels + 2*stringHeighInPixels - size( stimuli.dimmed_symbols{ winnerSymbol.iRowCol }, 1 )
         leftStartStringInPixels + size( stimuli.dimmed_symbols{ winnerSymbol.iRowCol }, 2 )
-        TopStringMarginInPixels + stringHeighInPixels
+        2*TopStringMarginInPixels + 2*stringHeighInPixels
         ];
-    st1.sc.stimuli(iFbStringStimulus(iStrSymbUpdate)).states(1).position         = symbStrPos;
-    st1.sc.stimuli(iFbStringStimulus(iStrSymbUpdate)).states(2).position         = symbStrPos;
+    st1.sc.stimuli(iFbStringStimulus(iStrSymbUpdate)).states(1).desired.position         = symbStrPos;
+    st1.sc.stimuli(iFbStringStimulus(iStrSymbUpdate)).states(2).desired.position         = symbStrPos;
     st1.sc.stimuli(iFbStringStimulus(iStrSymbUpdate)).states(1).views(1).cropRect= stimuli.dimmed_cropRect{ winnerSymbol.iRowCol }';
     st1.sc.stimuli(iFbStringStimulus(iStrSymbUpdate)).states(2).views(1).cropRect= stimuli.dimmed_cropRect{ winnerSymbol.iRowCol }';
     
